@@ -1,0 +1,24 @@
+# Alibaba Cloud SDK for Python
+alibabacloud_tea
+alibabacloud_ecs20140526
+alibabacloud_alb20200616
+
+# FastAPI and related
+fastapi==0.112.0
+uvicorn[standard]==0.30.6
+pydantic==2.8.2
+pydantic-settings
+python-multipart==0.0.9
+
+# API Security and Validation
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.1
+
+# Logging and Monitoring
+loguru==0.7.2
+requests==2.32.3
+
+# Development dependencies (optional, for local development)
+pytest==8.2.2
+httpx==0.27.0

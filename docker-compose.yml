@@ -1,0 +1,43 @@
+#version: '3.8'
+
+services:
+  aliyun-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aliyun-manager
+    restart: unless-stopped
+    ports:
+      - "6060:6060"
+    volumes:
+      # 挂载当前目录到容器中，避免反复构建
+      - .:/app
+    environment:
+      # Alibaba Cloud Credentials
+      - ACCESS_KEY_ID=${ACCESS_KEY_ID}
+      - ACCESS_KEY_SECRET=${ACCESS_KEY_SECRET}
+      # Default region (can be overridden by API calls)
+      - DEFAULT_REGION=cn-hangzhou
+      # Default security group ID (for ECS operations)
+      - DEFAULT_SECURITY_GROUP_ID=${DEFAULT_SECURITY_GROUP_ID:-sg-bp19nke7purenpearpmb}
+      # Logging level
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      # 设置 PYTHONPATH 指向挂载的目录
+      - PYTHONPATH=/app
+    env_file:
+      - .env
+    networks:
+      - aliyun-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+      start_interval: 5s
+    labels:
+      - "service=aliyun-manager"
+
+networks:
+  aliyun-network:
+    driver: bridge
