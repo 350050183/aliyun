@@ -4,3 +4,4 @@
 ecs-acl-demo
 alb-acl-demo
 logs/
+__pycache__/
